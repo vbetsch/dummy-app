@@ -3,4 +3,5 @@ WORKDIR /app
 COPY . .
 RUN npm install
 CMD npm run start
-EXPOSE 8080
+ENV PORT=1337
+EXPOSE 1337

@@ -1,7 +1,7 @@
 # Variables
 DOCKER_IMAGE_TAG := dummy-app:1.0
 DOCKER_CONTAINER_NAME := dummy-container
-DOCKER_PORT := 8080
+DOCKER_PORT := 1337
 LISTEN_PORT := 80
 
 build:
