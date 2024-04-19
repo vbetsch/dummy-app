@@ -13,6 +13,9 @@ create:
 start:
 	docker container start $(DOCKER_CONTAINER_NAME)
 
+test:
+	curl http://localhost
+
 stop:
 	docker container stop $(DOCKER_CONTAINER_NAME)
 
