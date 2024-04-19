@@ -1,4 +1,5 @@
 # Variables
+DOCKER_HOSTNAME := mydocker
 DOCKER_IMAGE_TAG := dummy-app:1.0
 DOCKER_CONTAINER_NAME := dummy-container
 DOCKER_PORT := 1337
@@ -8,7 +9,7 @@ build:
 	docker image build --tag $(DOCKER_IMAGE_TAG) .
 
 create:
-	docker container create -p $(LISTEN_PORT):$(DOCKER_PORT) --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_TAG)
+	docker container create -h $(DOCKER_HOSTNAME) -p $(LISTEN_PORT):$(DOCKER_PORT) --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_TAG)
 
 start:
 	docker container start $(DOCKER_CONTAINER_NAME)
