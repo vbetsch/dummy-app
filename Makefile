@@ -1,6 +1,6 @@
 # Variables
 DOCKER_HOSTNAME := mydocker
-DOCKER_IMAGE_TAG := dummy-app:1.0
+DOCKER_IMAGE_TAG := dummy-app:2.0
 DOCKER_CONTAINER_NAME := dummy-container
 DOCKER_PORT := 1337
 LISTEN_PORT := 80
@@ -23,4 +23,4 @@ stop:
 remove:
 	docker container remove $(DOCKER_CONTAINER_NAME) -f
 
-.PHONY: build create start stop remove
+.PHONY: build create start test stop remove
