@@ -8,10 +8,8 @@ RUN ["npm", "run", "build"]
 
 # -------------------------------------------------------
 FROM build AS development
-WORKDIR /app
 CMD ["npm", "run", "develop"]
 
 # -------------------------------------------------------
 FROM build AS production
-WORKDIR /app
 CMD ["npm", "run", "start"]
