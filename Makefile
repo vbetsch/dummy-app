@@ -5,7 +5,7 @@ DOCKER_CONTAINER_NAME := dummy-container
 DOCKER_PORT := 1337
 LISTEN_PORT := 80
 
-all: build remove create start
+all: compose-down compose-up
 
 build:
 	docker image build --tag $(DOCKER_IMAGE_TAG) .

@@ -1,16 +1,37 @@
-services:	
+services:
+    dummy-cache:
+        image: redis:latest
+        environment:
+            REDIS_PORT: 6379
+        networks:
+            - dummy-net
+
+    dummy-db:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: 'tH1sIsThEr0oTp@sSW0rD'
+            MYSQL_DATABASE: my_database
+            MYSQL_USER: my_user
+            MYSQL_PASSWORD: my_password
+        networks:
+            - dummy-net
+        volumes:
+            - dummy-vol-db:/var/lib/mysql
+
     dummy-app:
+        depends_on:
+            - dummy-cache
+            - dummy-db
         hostname: mydocker
         user: 1:1
         build:
             context: .
             dockerfile: Dockerfile
-            target: production
         environment:
             PORT: 1337
             REDIS_HOST: dummy-cache
             REDIS_PORT: 6379
-            MYSQL_HOST: mysql
+            MYSQL_HOST: dummy-db
             MYSQL_PORT: 3306
             MYSQL_DB: my_database
             MYSQL_USER: my_user
@@ -19,32 +40,10 @@ services:
             - 80:1337
         networks:
             - dummy-net
-        depends_on:
-            - mysql
-            - dummy-cache
-
-    dummy-cache:
-        image: redis:latest
-        environment:
-            REDIS_PORT: 6379
-        networks:
-            - dummy-net
-
-    mysql:
-        image: mysql:latest
-        environment:
-            MYSQL_ROOT_PASSWORD: root_password
-            MYSQL_DATABASE: my_database
-            MYSQL_USER: my_user
-            MYSQL_PASSWORD: my_password
-        networks:
-            - dummy-net
-        volumes:
-            - dummy-vol:/var/lib/mysql
 
 networks:
     dummy-net:
         driver: bridge
 
 volumes:
-    dummy-vol:
+    dummy-vol-db:
