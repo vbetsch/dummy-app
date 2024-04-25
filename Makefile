@@ -1,9 +1,9 @@
 # Variables
-# DOCKER_HOSTNAME := mydocker
+DOCKER_HOSTNAME := mydocker
 DOCKER_IMAGE_TAG := dummy-app:2.0
 DOCKER_CONTAINER_NAME := dummy-container
-# DOCKER_PORT := 1337
-# LISTEN_PORT := 80
+DOCKER_PORT := 1337
+LISTEN_PORT := 80
 
 all: build remove create start
 
@@ -12,7 +12,7 @@ build:
 
 create:
 # 	docker container create -h $(DOCKER_HOSTNAME) -p $(LISTEN_PORT):$(DOCKER_PORT) -e PORT=$(DOCKER_PORT) --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_TAG)
-	docker container create --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_TAG)
+	docker container create -h $(DOCKER_HOSTNAME) -p $(LISTEN_PORT):$(DOCKER_PORT) -e PORT=$(DOCKER_PORT) --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_TAG)
 
 start:
 	docker container start $(DOCKER_CONTAINER_NAME)
