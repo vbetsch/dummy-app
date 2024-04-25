@@ -32,6 +32,12 @@ stop:
 remove:
 	docker container remove $(DOCKER_CONTAINER_NAME) -f
 
+compose-up:
+	docker-compose up -d
+
+compose-down:
+	docker-compose down --remove-orphans
+
 recreate: remove create
 
 .PHONY: recreate build create start test logs shell stop remove

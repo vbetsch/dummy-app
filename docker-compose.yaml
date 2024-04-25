@@ -1,0 +1,21 @@
+services:	
+    dummy-app:
+        hostname: mydocker
+        
+        build:
+            context: .
+            dockerfile: Dockerfile
+        
+        expose:
+            - '1337'
+        
+        deploy:
+            replicas: 1
+        
+        restart: always
+        
+        environment:
+            PORT: 1337
+        
+        ports:
+            - 80:1337
