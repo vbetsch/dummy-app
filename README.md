@@ -37,6 +37,13 @@ Il s'agit d'une application web basique réalisée en Typescript avec Express.
 
 Vous devez optimiser votre image pour que l'étape d'installation des dépendances soit supprimée du cache **seulement si** vous modifiez le contenu du fichier `package.json` ou `package-lock.json`.
 
+L'image doit comporter **trois** stages :
+* build
+* development
+* production
+
+L'image doit être la plus petite possible en taille pour le stage de production.
+
 ## Configuration du container
 
 Une fois l'image créée vous pouvez découvrir les différents arguments disponibles pour créer et lancer un conteneur.

@@ -2,8 +2,7 @@ import express, { Request, Response } from "express";
 import os from "os";
 import process from "process";
 import { Redis } from "ioredis";
-import mysql from "mysql";
-import { promisify } from "util";
+import mysql from "mysql2/promise";
 import fs from "fs";
 const app = express();
 const port = +(process.env.PORT ?? "8080");
@@ -65,18 +64,15 @@ app.get("/", async (req: Request, res: Response) => {
 
   // MySQL check
   try {
-    const mysqlConnection = mysql.createConnection({
-      host: process.env.MYSQL_HOST,
-      user: process.env.MYSQL_USER,
-      password: process.env.MYSQL_PASSWORD,
-      database: process.env.MYSQL_DB,
+    const mysqlConnection = await mysql.createConnection({
+      host: process.env.MYSQL_HOST ?? "localhost",
+      user: process.env.MYSQL_USER ?? "root",
+      password: process.env.MYSQL_PASSWORD ?? "",
+      database: process.env.MYSQL_DB ?? "test",
     });
 
-    const query = promisify(mysqlConnection.query).bind(mysqlConnection);
-
-    const result = await query("SELEC 1");
+    const result = await mysqlConnection.query("SELECT 1");
     if (result) {
-      console.log(result);
       data.mysql = Status.OK;
     }
     mysqlConnection.destroy();
