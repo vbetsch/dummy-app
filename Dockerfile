@@ -7,9 +7,9 @@ COPY index.ts tsconfig.json ./
 RUN ["npm", "run", "build"]
 
 # -------------------------------------------------------
-# FROM build AS development
-# WORKDIR /app
-# CMD ["npm", "run", "develop"]
+FROM build AS development
+WORKDIR /app
+CMD ["npm", "run", "develop"]
 
 # -------------------------------------------------------
 FROM build AS production
