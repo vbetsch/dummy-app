@@ -25,7 +25,7 @@ L'application web possède une unique route `\` qui retourne un JSON avec des r�
 * **MYSQL_HOST** Host de la base de données MySQL
 * **MYSQL_PORT** Port de la base de données MySQL
 * **MYSQL_DB** Nom de la base de données MySQL
-* **MYSQL_USERNAME** Nom d'utilisateur pour la base de données MySQL
+* **MYSQL_USER** Nom d'utilisateur pour la base de données MySQL
 * **MYSQL_PASSWORD** Mot de passe de l'utilisateur pour la base de données MySQL
 * **FILE_PATH_TO_CHECK** Chemin du fichier dont la présence est à contrôler
 
