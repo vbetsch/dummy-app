@@ -1,21 +1,27 @@
 services:	
     dummy-app:
         hostname: mydocker
-        
         build:
             context: .
             dockerfile: Dockerfile
-        
-        expose:
-            - '1337'
-        
-        deploy:
-            replicas: 1
-        
-        restart: always
-        
         environment:
             PORT: 1337
-        
+            REDIS_HOST: dummy-cache
+            REDIS_PORT: 6379
         ports:
             - 80:1337
+        networks:
+            - my_network
+        depends_on:
+            - dummy-cache
+
+    dummy-cache:
+        image: redis:latest
+        environment:
+            REDIS_PORT: 6379
+        networks:
+            - my_network
+
+networks:
+    my_network:
+        driver: bridge
