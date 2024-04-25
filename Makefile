@@ -1,6 +1,6 @@
 # Variables
 DOCKER_HOSTNAME := mydocker
-DOCKER_IMAGE_TAG := dummy-app:2.0
+DOCKER_IMAGE_TAG := dummy-app:1.1
 DOCKER_CONTAINER_NAME := dummy-container
 DOCKER_PORT := 1337
 LISTEN_PORT := 80
