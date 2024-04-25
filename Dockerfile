@@ -1,6 +1,6 @@
-FROM node:20
+FROM node:20 AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install --omit=dev
-COPY index.js ./
-CMD ["npm", "run", "start"]
+COPY index.ts ./
+CMD ["npm", "run", "build"]
