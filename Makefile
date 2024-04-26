@@ -11,14 +11,13 @@ build:
 	docker image build --tag $(DOCKER_IMAGE_TAG) .
 
 create:
-# 	docker container create -h $(DOCKER_HOSTNAME) -p $(LISTEN_PORT):$(DOCKER_PORT) -e PORT=$(DOCKER_PORT) --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_TAG)
 	docker container create -h $(DOCKER_HOSTNAME) -p $(LISTEN_PORT):$(DOCKER_PORT) -e PORT=$(DOCKER_PORT) --name $(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE_TAG)
 
 start:
 	docker container start $(DOCKER_CONTAINER_NAME)
 
 test:
-	curl http://localhost
+	curl http://localhost:8080
 
 logs:
 	docker logs $(DOCKER_CONTAINER_NAME)
