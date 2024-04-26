@@ -1,49 +1,56 @@
 services:
-    dummy-cache:
-        image: redis:latest
-        environment:
-            REDIS_PORT: 6379
-        networks:
-            - dummy-net
+  redis:
+    image: redis:latest
+    networks:
+      - net
+    restart: unless-stopped
 
-    dummy-db:
-        image: mysql:latest
-        environment:
-            MYSQL_ROOT_PASSWORD: 'tH1sIsThEr0oTp@sSW0rD'
-            MYSQL_DATABASE: my_database
-            MYSQL_USER: my_user
-            MYSQL_PASSWORD: my_password
-        networks:
-            - dummy-net
-        volumes:
-            - dummy-vol-db:/var/lib/mysql
+  mysql:
+    image: mysql:8
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    networks:
+      - net
+    volumes:
+      - db:/var/lib/mysql
+    restart: unless-stopped
 
-    dummy-app:
-        depends_on:
-            - dummy-cache
-            - dummy-db
-        hostname: mydocker
-        user: 1:1
-        build:
-            context: .
-            dockerfile: Dockerfile
-        environment:
-            PORT: 1337
-            REDIS_HOST: dummy-cache
-            REDIS_PORT: 6379
-            MYSQL_HOST: dummy-db
-            MYSQL_PORT: 3306
-            MYSQL_DB: my_database
-            MYSQL_USER: my_user
-            MYSQL_PASSWORD: my_password
-        ports:
-            - 80:1337
-        networks:
-            - dummy-net
+  app:
+    hostname: mydocker
+    user: 1000:1000
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    image: app   # name image created at build
+    ports:
+      - 8080:${PORT}
+    environment:
+      - PORT=${PORT}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_DB=${MYSQL_DB}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - FILE_PATH_TO_CHECK=${FILE_PATH_TO_CHECK}
+    volumes:
+      - ./dummy.txt:/app/dummy.txt
+      - ./index.ts:/app/index.ts
+    networks:
+      - net
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - mysql
 
 networks:
-    dummy-net:
-        driver: bridge
+  net:
+    driver: bridge
 
 volumes:
-    dummy-vol-db:
+  db:
